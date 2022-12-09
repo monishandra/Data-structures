@@ -1,0 +1,457 @@
+										Stack
+									      ---------
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 5
+int c=0;
+struct stack{
+    int items[MAX];
+    int top;
+};
+typedef struct stack stack;
+void creatingemptystack(stack *s){
+    s->top=-1;
+}
+
+int isfull(stack *s){
+    if(s->top==MAX-1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int isempty(stack *s){
+    if(s->top==-1){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+void push(stack *s,int newitem){
+    if(isfull(s)){
+        printf("stack is full");
+        exit(1);
+    }
+    s->top++;
+    s->top[s->items]=newitem;
+    c++;
+}
+int pop(stack *s){
+    int newitem;
+    if(isempty(s)){
+        printf("stack is empty");
+        exit(1);
+    }
+    newitem=s->items[s->top];
+    s->top=s->top-1;
+    c--;
+}
+int peek(stack *s){
+    if(isempty(s)){
+        printf("stack is empty");
+    }
+    printf("%d",s->items[s->top]);
+}
+void printStack(stack *s) {
+  printf("Stack: ");
+  for (int i = 0; i < c; i++) {
+    printf("%d ", s->items[i]);
+  }
+  printf("\n");
+}
+int main(){
+    stack *s = (stack *)malloc(sizeof(stack));
+    creatingemptystack(s);
+    push(s,1);
+    push(s,2);
+    push(s,3);
+    push(s,4);
+    push(s,5);
+    printStack(s);
+    pop(s);
+    printStack(s);
+    peek(s);
+    
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------											Queue
+
+#include <stdio.h>
+
+#define MAX 5
+int items[MAX];
+int front=-1,rear=-1;
+
+void enqueue(int value){
+    if(rear==MAX-1){
+        printf("queue is full");
+    }
+    else {
+        if(front==-1){
+            front=0;
+        }
+        rear++;
+        items[rear]=value;
+        printf("inserted -> %d\n",value);
+    }
+}
+void dequeue(){
+    if(front==-1){
+        printf("queue is empty");
+    }
+    else{
+        printf("deleted item -> %d\n",items[front]);
+        front++;
+    }
+}
+void peek(){
+    printf("first:%d\n",items[front]);
+}
+void display(){
+    if(rear==-1){
+        printf("queue is empty");
+    }
+    else{
+        for(int i=0;i<=rear;i++){
+            printf("%d",items[i]);
+        }
+    }
+    printf("\n");
+}
+int main(){
+    enqueue(1);
+    enqueue(2);
+    enqueue(3);
+    enqueue(4);
+    enqueue(5);
+    display();
+    peek();
+    dequeue();
+    display();
+    peek();
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+										Linked list
+
+#include <stdio.h>
+#include <stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+};
+
+void printlinked(struct node *p) {
+  while (p != NULL) {
+    printf("%d ", p->data);
+    p = p->next;
+  }
+}
+int main(){
+    struct node *head;
+    struct node *one=NULL;
+    struct node *two=NULL;
+    struct node *three=NULL;
+    
+    one=(struct node*)malloc(sizeof(struct node));
+    two=(struct node*)malloc(sizeof(struct node));
+    three=(struct node*)malloc(sizeof(struct node));
+    
+    one->data=1;
+    two->data=2;
+    three->data=3;
+    
+    one->next=two;
+    two->next=three;
+    three->next=NULL;
+    
+    head=one;
+    printlinked(head);
+    
+}
+	
+----------------------------------------------------------
+		operations in linked list
+----------------------------------------------------------
+
+#include <stdio.h>
+#include <stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+};
+
+struct node *add_beg(struct node** head,int data){
+    struct node *addb=malloc(sizeof(struct node));
+    addb->data=data;
+    addb->next=*head;
+    *head=addb;
+}
+
+struct node *add_end(struct node** head,int data){
+    struct node *adde=malloc(sizeof(struct node));
+    adde->data=data;
+    adde->next=NULL;
+    struct node *temp=*head;
+    while(temp->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next=adde;
+}
+
+struct node *add_pos(struct node** head, int data,int position){
+    struct node *addp=malloc(sizeof(struct node));
+    addp->data=data;
+    struct node *temp=*head;
+    for(int i=1;i<position;i++){
+        if(temp->next!=0){
+            temp=temp->next;
+        }
+    }
+    addp->next=temp->next;
+    temp->next=addp;
+}
+
+struct node *del_beg(struct node **head){
+    struct node *temp=*head;
+    *head=(*head)->next;
+    free(temp);
+    return *head;
+}
+
+struct node *del_end(struct node **head){
+    struct node *temp=*head;
+    while(temp->next->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next=NULL;
+    return *head;
+}
+
+struct node *del_pos(struct node **head,int position){
+    struct node *temp=*head;
+    for(int i=2;i<position;i++){
+        if(temp->next!=NULL){
+            temp=temp->next;
+        }
+    }
+    temp->next=temp->next->next;
+}
+int searchnode(struct node **head,int key){
+    struct node *current= *head;
+    while(current!=NULL){
+        if(current->data==key){
+            return 1;
+        }
+        current = current->next;
+    }
+    return 0;
+}
+void printList(struct node* node) {
+  while (node != NULL) {
+  printf("%d ", node->data);
+  node = node->next;
+  }
+}
+int main(){
+    struct node *head;
+    struct node *one=(struct node*)malloc(sizeof(struct node));
+    one->data=2;
+    one->next=NULL;
+    head=one;
+    struct node *temp=head;
+    temp=add_beg(&head,1);
+    temp=add_beg(&head,2);
+    printf("after adding at begining:");
+    printList(head);
+    temp=add_end(&head,4);
+    printf("\nafter adding at end:");
+    printList(head);
+    temp=add_pos(&head,3,2);
+    printf("\nafter adding at position 2:");
+    printList(head);
+    head=del_beg(&head);
+    printf("\ndeleting at beg:");
+    printList(head);
+    head=del_end(&head);
+    printf("\ndeleting at end:");
+    printList(head);
+    head=del_pos(&head,2);
+    printf("\ndeleting at position 2:");
+    printList(head);
+    int key=2;
+    temp=head;
+    printList(head);
+    if(searchnode(&head,key)){
+        printf("\n%d has found\n",key);
+    }
+    
+}
+
+
+-----------------------------------------------------------------------------
+		Double linked list
+-----------------------------------------------------------------------------
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node{
+    struct node *prev;
+    int data;
+    struct node *next;
+};
+
+struct node *add_beg(struct node **head,int data){
+    struct node *addb=malloc(sizeof(struct node));
+    addb->data=data;
+    addb->next=(*head);
+    addb->prev=NULL;
+    (*head)->prev = addb;
+    (*head)=addb;
+}
+struct node *add_end(struct node **head,int data){
+    struct node *adde=malloc(sizeof(struct node));
+    adde->data=data;
+    adde->next=NULL;
+    struct node *temp=*head;
+    while(temp->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next = adde;
+    adde->prev = temp;
+}
+struct node *add_pos(struct node **head,int data,int position){
+    struct node *addp=malloc(sizeof(struct node));
+    addp->data=data;
+    struct node *temp=*head;
+    for(int i=2;i<position;i++){
+        if(temp->next!=0){
+            temp=temp->next;
+        }
+    }
+    addp->next=temp->next;
+    temp->next=addp;
+}
+struct node *del_beg(struct node **head){
+    struct node *temp=*head;
+    *head=(*head)->next;
+    free(temp);
+    return *head;
+}
+struct node *del_end(struct node **head){
+    struct node *temp=*head;
+    while(temp->next->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next=NULL;
+    return *head;
+}
+void printlist(struct node* node){
+    while(node!=NULL){
+        printf("%d->",node->data);
+        node = node->next;
+    }
+    if(node==NULL){
+        printf("NULL");
+    }
+}
+
+int main(){
+    struct node *head;
+    struct node *one=malloc(sizeof(struct node));
+    one->data=3;
+    one->next=NULL;
+    one->prev=NULL;
+    head=one;
+    struct node *temp=head;
+    temp=add_beg(&head,2);
+    temp=add_beg(&head,1);
+    temp=add_end(&head,4);
+    temp=add_pos(&head,5,2);
+    temp=del_beg(&head);
+    temp=del_end(&head);
+    temp=head;
+    printlist(head);
+}
+
+
+-------------------------------------------------------------
+			Binary search
+-------------------------------------------------------------
+
+#include <stdio.h>
+int main(){
+    int n;
+    int a[10];
+    printf("enter size of array: ");
+    scanf("%d",&n);
+    printf("enter elements of array: ");
+    for(int i=0;i<n;i++){
+        scanf("%d",&a[i]);
+    }
+    int key;
+    printf("enter the key to be found: ");
+    scanf("%d",&key);
+    int j;
+    for(j=0;j<n;j++){
+        if(a[j]==key){
+            printf("%d has found in %d position",key,j);
+            break;
+        }
+    }
+    if(j==n){
+        printf("element not found");
+    }
+    return 0;
+}
+
+-------------------------------------------------------------------
+			binary search
+-------------------------------------------------------------------
+
+#include <stdio.h>
+int binarysearch(int a[],int n,int key ){
+    int l=0,r=n-1;
+    while(l<r){
+        int mid=(l+r)/2;
+        if(key==a[mid]){
+            return mid;
+        }
+        else if(key<a[mid]){
+            r=mid-1;
+        }
+        else{
+            l=mid+1;
+        }
+    }
+    return -1;
+}
+int main(){
+    int n;
+    int a[10];
+    printf("enter size of array: ");
+    scanf("%d",&n);
+    printf("enter elements of array: ");
+    for(int i=0;i<n;i++){
+        scanf("%d",&a[i]);
+    }
+    int key;
+    printf("enter the key to be found: ");
+    scanf("%d",&key);
+    int result = binarysearch(a,n,key);
+    if(result==-1){
+        printf("key not found");
+    }
+    else{
+        printf("key has found");
+    }
+    return 0;
+}
+
+										
