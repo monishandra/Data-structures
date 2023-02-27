@@ -14,14 +14,14 @@ int main() {
     printf("child--welcome,pid=%d,ppid=%d\n", getpid(), getppid());
     for (i = 1; i <= max; i++)
       printf("child--%d\n", i);
-      usleep(5);
+      sleep(2);
     exit(0);
   } else // ret>0
   {
     printf("parent--hello,pid=%d,ppid=%d\n", getpid(), getppid());
     for (i = 1; i <= max; i++)
       printf("parent--%d\n", i);
-      usleep(1);
+      sleep(2);
   }
   return 0;
 }

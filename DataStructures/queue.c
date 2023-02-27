@@ -1,54 +1,57 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 #define MAX 5
 int items[MAX];
-int front=-1,rear=-1;
-
+int rear=-1;
+int front =-1;
 void enqueue(int value){
     if(rear==MAX-1){
-        printf("queue is full");
+        printf("queue is full\n");
+        //exit(1);
     }
-    else {
+    else{
         if(front==-1){
             front=0;
         }
         rear++;
         items[rear]=value;
-        printf("inserted -> %d\n",value);
     }
 }
 void dequeue(){
     if(front==-1){
-        printf("queue is empty");
+        printf("queue is empty\n");
+        //exit(1);
     }
     else{
-        printf("deleted item -> %d\n",items[front]);
+        // printf("Deleted element is %d\n",items[front]);
+        // for(int i=0;i<MAX;i++)
+        // {
+        //     items[i]=items[i+1];
+        // }
+        // rear--;
         front++;
     }
 }
-void peek(){
-    printf("first:%d\n",items[front]);
-}
-void display(){
+void printedqueue(){
     if(rear==-1){
         printf("queue is empty");
     }
-    else{
-        for(int i=0;i<=rear;i++){
-            printf("%d",items[i]);
-        }
+    for(int i=front;i<=rear;i++){
+        printf("%d ",items[i]);
     }
     printf("\n");
 }
-int main(){
+int main()
+{
     enqueue(1);
     enqueue(2);
     enqueue(3);
-    enqueue(4);
-    enqueue(5);
-    display();
-    peek();
+    enqueue(3);
+    enqueue(3);
+    enqueue(3);
+    printedqueue();
     dequeue();
-    display();
-    peek();
+    printedqueue();
+
+    return 0;
 }

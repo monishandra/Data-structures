@@ -23,7 +23,6 @@ int main() {
     } else // ret>0
     {
         printf("parent--hello,pid=%d,ppid=%d\n", getpid(), getppid());
-        sem_wait(ps);
         sem_wait(qs);
         for (i = 1; i <= max; i++) {
             printf("parent--%d\n", i);

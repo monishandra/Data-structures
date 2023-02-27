@@ -4,6 +4,9 @@
         "stdlib.h": "c",
         "ostream": "cpp",
         "iostream": "cpp",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "iterator": "c",
+        "xmemory": "c",
+        "xutility": "c"
     }
 }

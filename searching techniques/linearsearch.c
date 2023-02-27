@@ -14,7 +14,7 @@ int main(){
     int j;
     for(j=0;j<n;j++){
         if(a[j]==key){
-            printf("%d has found in %d position",key,j);
+            printf("%d has found in %d position",key,j+1);
             break;
         }
     }
